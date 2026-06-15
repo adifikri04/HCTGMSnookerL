@@ -22,4 +22,4 @@ if ($issues) {
     throw new \RuntimeException(
         'Composer detected issues in your platform: ' . implode(' ', $issues)
     );
-}
+} 
