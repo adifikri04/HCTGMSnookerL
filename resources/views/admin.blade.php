@@ -250,7 +250,7 @@
 </div>
 
 <script type="module">
-import { initNav } from '/js/nav.js';
+import { initNav } from "{!! asset('js/nav.js') !!}";
 
 const user = await initNav('admin');
 if (!user || user.role !== 'admin') { window.location.href = '/login'; }

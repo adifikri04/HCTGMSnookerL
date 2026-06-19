@@ -217,8 +217,8 @@
   </footer>
 
   <script type="module">
-    import { initNav } from '/js/nav.js';
-    import { initFooter } from '/js/footer.js';
+    import { initNav } from "{!! asset('js/nav.js') !!}";
+    import { initFooter } from "{!! asset('js/footer.js') !!}";
 
     let currentUser = null;
 
