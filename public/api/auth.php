@@ -69,7 +69,8 @@ if ($action === 'login') {
 
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_uid'] = $user['uid'];
-        sendJson(['success' => true, 'uid' => $user['uid'], 'role' => $user['role'], 'displayName' => $user['displayName']]);
+        $dName = $user['displayName'] ?? $user['displayname'] ?? null;
+        sendJson(['success' => true, 'uid' => $user['uid'], 'role' => $user['role'], 'displayName' => $dName]);
     } else {
         sendJson(['error' => 'Invalid email or password.'], 401);
     }
