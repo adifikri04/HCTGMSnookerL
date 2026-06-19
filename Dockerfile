@@ -1,5 +1,5 @@
-# Use the official PHP 8.3 Apache image
-FROM php:8.3-apache
+# Use the official PHP 8.4 Apache image
+FROM php:8.4-apache
 
 # Install dependencies required by Laravel and Node.js for Vite
 RUN apt-get update && apt-get install -y \
