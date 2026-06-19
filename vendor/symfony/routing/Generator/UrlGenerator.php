@@ -150,7 +150,8 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
                 $queryParameters = $parameters['_query'];
                 unset($parameters['_query']);
             } else {
-                throw new InvalidParameterException('Parameter "_query" must be an array of query parameters.');
+                trigger_deprecation('symfony/routing', '7.4', 'Parameter "_query" is reserved for passing an array of query parameters. Passing a scalar value is deprecated and will throw an exception in Symfony 8.0.');
+                // throw new InvalidParameterException('Parameter "_query" must be an array of query parameters.');
             }
         }
 
@@ -203,11 +204,16 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
         // the path segments "." and ".." are interpreted as relative reference when resolving a URI; see http://tools.ietf.org/html/rfc3986#section-3.3
         // so we need to encode them as they are not used for this purpose here
         // otherwise we would generate a URI that, when followed by a user agent (e.g. browser), does not match this route
-        $url = strtr($url, ['/../' => '/%2E%2E/', '/./' => '/%2E/']);
-        if (str_ends_with($url, '/..')) {
-            $url = substr($url, 0, -2).'%2E%2E';
-        } elseif (str_ends_with($url, '/.')) {
-            $url = substr($url, 0, -1).'%2E';
+        if (str_contains($url, '/.')) {
+            $segments = explode('/', $url);
+            foreach ($segments as $i => $segment) {
+                if ('.' === $segment) {
+                    $segments[$i] = '%2E';
+                } elseif ('..' === $segment) {
+                    $segments[$i] = '%2E%2E';
+                }
+            }
+            $url = implode('/', $segments);
         }
 
         $schemeAuthority = '';
