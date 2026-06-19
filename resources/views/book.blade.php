@@ -136,8 +136,8 @@
   </footer>
 
   <script type="module">
-    import { initNav } from "{!! asset('js/nav.js') !!}";
-    import { initFooter } from "{!! asset('js/footer.js') !!}";
+    import { initNav } from "/js/nav.js";
+    import { initFooter } from "/js/footer.js";
 
     let currentUser = null;
     let bookedSlots = [];
@@ -178,7 +178,7 @@
     dateInput.value = today;
 
     async function checkAuth() {
-      const res = await fetch('api/auth.php?action=session');
+      const res = await fetch('/api/auth.php?action=session');
       const data = await res.json();
       if (data.user) {
         currentUser = data.user;
@@ -211,7 +211,7 @@
       if (!date || !tableId) return;
 
       try {
-        const res = await fetch(`api/bookings.php?action=check_slots&date=${date}&tableId=${tableId}`);
+        const res = await fetch(`/api/bookings.php?action=check_slots&date=${date}&tableId=${tableId}`);
         const data = await res.json();
         bookedSlots = Array.isArray(data) ? data : [];
         renderTimeSlots();
@@ -233,7 +233,7 @@
       errorMsg.classList.add('hidden');
 
       try {
-        const res = await fetch('api/bookings.php?action=create', {
+        const res = await fetch('/api/bookings.php?action=create', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

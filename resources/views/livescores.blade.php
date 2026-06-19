@@ -95,8 +95,8 @@
 </footer>
 
 <script type="module">
-import { initNav } from "{!! asset('js/nav.js') !!}";
-import { initFooter } from "{!! asset('js/footer.js') !!}";
+import { initNav } from "/js/nav.js";
+import { initFooter } from "/js/footer.js";
 initNav('livescores');
 initFooter();
 lucide.createIcons();
@@ -189,7 +189,7 @@ function renderMatches() {
 
 async function fetchScores() {
   try {
-    const res = await fetch('api/livescores.php?action=list');
+    const res = await fetch('/api/livescores.php?action=list');
     const data = await res.json();
     if (Array.isArray(data)) {
       allMatches = data;

@@ -75,8 +75,8 @@
   <footer></footer>
 
   <script type="module">
-    import { initNav } from "{!! asset('js/nav.js') !!}";
-    import { initFooter } from "{!! asset('js/footer.js') !!}";
+    import { initNav } from "/js/nav.js";
+    import { initFooter } from "/js/footer.js";
     initNav('players');
     initFooter();
 

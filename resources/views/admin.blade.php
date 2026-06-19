@@ -250,13 +250,13 @@
 </div>
 
 <script type="module">
-import { initNav } from "{!! asset('js/nav.js') !!}";
+import { initNav } from "/js/nav.js";
 
 const user = await initNav('admin');
 if (!user || user.role !== 'admin') { window.location.href = '/login'; }
 document.getElementById('admin-name').innerText = user?.displayName || 'Admin';
 document.getElementById('btn-logout').addEventListener('click', async () => {
-  await fetch('api/auth.php?action=logout'); window.location.href = '/login';
+  await fetch('/api/auth.php?action=logout'); window.location.href = '/login';
 });
 lucide.createIcons();
 </script>

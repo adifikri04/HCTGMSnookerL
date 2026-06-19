@@ -111,8 +111,8 @@
     <footer class="w-full"></footer>
 
   <script type="module">
-    import { initNav } from "{!! asset('js/nav.js') !!}";
-    import { initFooter } from "{!! asset('js/footer.js') !!}";
+    import { initNav } from "/js/nav.js";
+    import { initFooter } from "/js/footer.js";
     initNav('login');
     initFooter();
 
@@ -148,7 +148,7 @@
       setLoading(btn, true);
 
       try {
-        const res = await fetch('api/auth.php?action=login', {
+        const res = await fetch('/api/auth.php?action=login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password })

@@ -217,8 +217,8 @@
   </footer>
 
   <script type="module">
-    import { initNav } from "{!! asset('js/nav.js') !!}";
-    import { initFooter } from "{!! asset('js/footer.js') !!}";
+    import { initNav } from "/js/nav.js";
+    import { initFooter } from "/js/footer.js";
 
     let currentUser = null;
 
@@ -235,12 +235,12 @@
     const btnLogout = document.getElementById('btn-logout');
 
     btnLogout.addEventListener('click', async () => {
-      await fetch('api/auth.php?action=logout');
+      await fetch('/api/auth.php?action=logout');
       window.location.href = '/login';
     });
 
     async function checkAuth() {
-      const res = await fetch('api/auth.php?action=session');
+      const res = await fetch('/api/auth.php?action=session');
       const data = await res.json();
       if (data.user) {
         currentUser = data.user;
@@ -255,7 +255,7 @@
 
     async function loadAllData() {
       try {
-        const res = await fetch('api/profile.php');
+        const res = await fetch('/api/profile.php');
         const data = await res.json();
         
         if (data.error) {
@@ -268,7 +268,7 @@
         renderTournaments(data.registrations);
         
         try {
-          const ordersRes = await fetch('api/orders.php?action=my_orders');
+          const ordersRes = await fetch('/api/orders.php?action=my_orders');
           const ordersData = await ordersRes.json();
           renderPurchases(ordersData);
         } catch (e) {
@@ -351,7 +351,7 @@
         btn.addEventListener('click', async (e) => {
           if (confirm('Are you sure you want to cancel this booking?')) {
             const id = e.currentTarget.getAttribute('data-id');
-            await fetch('api/bookings.php?action=delete', {
+            await fetch('/api/bookings.php?action=delete', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id })
@@ -410,7 +410,7 @@
         btn.addEventListener('click', async (e) => {
           if (confirm('Are you sure you want to withdraw from this tournament?')) {
             const id = e.currentTarget.getAttribute('data-id');
-            await fetch('api/tournaments.php?action=delete', {
+            await fetch('/api/tournaments.php?action=delete', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id })
@@ -484,7 +484,7 @@
       saveBtn.innerText = 'Saving...';
 
       try {
-        const res = await fetch('api/profile.php', {
+        const res = await fetch('/api/profile.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
