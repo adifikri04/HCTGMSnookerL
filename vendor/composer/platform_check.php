@@ -4,8 +4,8 @@
 
 $issues = array();
 
-if (!(PHP_VERSION_ID >= 80400)) {
-    $issues[] = 'Your Composer dependencies require a PHP version ">= 8.4.0". You are running ' . PHP_VERSION . '.';
+if (!(PHP_VERSION_ID >= 80300)) {
+    $issues[] = 'Your Composer dependencies require a PHP version ">= 8.3.0". You are running ' . PHP_VERSION . '.';
 }
 
 if ($issues) {
@@ -22,4 +22,4 @@ if ($issues) {
     throw new \RuntimeException(
         'Composer detected issues in your platform: ' . implode(' ', $issues)
     );
-} 
+}
