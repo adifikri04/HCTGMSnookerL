@@ -21,7 +21,15 @@
   </script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    body { background-color: #0a0a0a; color: white; }
+    body { background-color: #0a0a0a; color: white; position: relative; }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.95)), url('/img/bg-login.jpg') center/cover no-repeat;
+    }
+    body > * { position: relative; z-index: 1; }
     .baize-gradient { background: linear-gradient(135deg, #166534 0%, #14532d 100%); }
     
   </style>
@@ -55,8 +63,8 @@
   <!-- Main -->
   <main class="pt-32 pb-24 min-h-screen flex items-center justify-center px-6">
     <div class="bg-surface-container-high p-8 md:p-12 rounded-xl max-w-md w-full text-center border border-outline-variant/20 shadow-2xl">
-      <div class="w-16 h-16 bg-red-600 rounded-xl mx-auto flex items-center justify-center shadow-lg shadow-red-900/40 mb-6 border border-red-500/30">
-        <span class="text-white font-black text-3xl italic">HC</span>
+      <div class="w-32 mx-auto flex items-center justify-center mb-6">
+        <img src="/img/logo.jpg" alt="HC TGM Snooker Club Logo" class="w-full h-auto rounded-xl shadow-[0_0_30px_rgba(220,38,38,0.3)] border border-neutral-800" />
       </div>
       <h2 class="text-3xl font-bold text-white mb-2">Join the Club</h2>
       <p class="text-neutral-400 mb-8 text-sm">Register as a player to book tables and track your rankings.</p>
