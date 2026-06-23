@@ -26,7 +26,8 @@
     .pulse{animation:pulse-dot 1.2s ease-in-out infinite;}
     @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
     .fade-in{animation:fadeIn .4s ease forwards;}
-    .score-box{background:linear-gradient(135deg,#1c1c1c,#262626);border:1px solid #404040;border-radius:16px;padding:24px 32px;text-align:center;min-width:100px;}
+    .score-box{background:linear-gradient(135deg,#1c1c1c,#262626);border:1px solid #404040;border-radius:12px;padding:12px 16px;text-align:center;min-width:70px;}
+    @media (min-width: 768px) { .score-box{border-radius:16px;padding:24px 32px;min-width:100px;} }
     .live-badge{display:inline-flex;align-items:center;gap:6px;background:#7f1d1d;color:#fca5a5;border:1px solid #991b1b;padding:3px 12px;border-radius:99px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;}
     .upcoming-badge{background:#1c3057;color:#93c5fd;border:1px solid #1d4ed8;}
     .completed-badge{background:#052e16;color:#86efac;border:1px solid #166534;}

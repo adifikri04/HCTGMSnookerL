@@ -195,12 +195,25 @@
 
     function renderTimeSlots() {
       timeInput.innerHTML = '';
+      const selectedDate = dateInput.value;
+      const today = new Date().toISOString().split('T')[0];
+      const currentHour = new Date().getHours();
+      
       ALL_TIME_SLOTS.forEach(slot => {
-        const isBooked = bookedSlots.includes(slot.value);
+        let isBooked = bookedSlots.includes(slot.value);
+        let isPast = false;
+        
+        if (selectedDate === today) {
+          const slotHour = parseInt(slot.value.split(':')[0], 10);
+          if (slotHour <= currentHour && slotHour >= 12) {
+             isPast = true;
+          }
+        }
+
         const option = document.createElement('option');
         option.value = slot.value;
-        option.disabled = isBooked;
-        option.innerText = slot.label + (isBooked ? ' (Booked)' : '');
+        option.disabled = isBooked || isPast;
+        option.innerText = slot.label + (isBooked ? ' (Booked)' : (isPast ? ' (Passed)' : ''));
         timeInput.appendChild(option);
       });
     }

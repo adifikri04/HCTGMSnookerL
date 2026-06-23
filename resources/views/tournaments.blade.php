@@ -51,52 +51,16 @@
           <h2 class="text-2xl font-black uppercase">Ongoing Tournament</h2>
           <span class="rounded-full border border-red-600/40 bg-red-600/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-red-400">Live</span>
         </div>
-        <div class="overflow-hidden rounded-lg border border-neutral-800 bg-surface-container-low">
-          <div class="grid gap-0 lg:grid-cols-[.9fr_1.1fr]">
-            <div class="p-8 md:p-10">
-              <p class="mb-3 text-xs font-bold uppercase tracking-widest text-red-500">June Club Championship</p>
-              <h3 class="mb-4 text-3xl font-black">Quarter Final Stage</h3>
-              <p class="mb-8 leading-7 text-neutral-400">The top sixteen players are fighting for the monthly title. Matches are played race-to-5, alternate break, with live table updates at the club desk.</p>
-              <div class="grid grid-cols-3 gap-4 border-t border-neutral-800 pt-6 text-center">
-                <div><div class="text-2xl font-black">16</div><div class="text-xs uppercase tracking-widest text-neutral-500">Players</div></div>
-                <div><div class="text-2xl font-black">5</div><div class="text-xs uppercase tracking-widest text-neutral-500">Frames</div></div>
-                <div><div class="text-2xl font-black">RM800</div><div class="text-xs uppercase tracking-widest text-neutral-500">Prize</div></div>
-              </div>
-            </div>
-            <div class="bg-neutral-950 p-8 md:p-10">
-              <h4 class="mb-5 text-sm font-bold uppercase tracking-widest text-neutral-400">Tournament Table</h4>
-              <div class="space-y-3">
-                <div class="flex items-center justify-between rounded-md border border-neutral-800 bg-neutral-900 p-4"><span>Aiman Rahman</span><span class="font-black text-red-500">5 - 3</span><span>Brian Lee</span></div>
-                <div class="flex items-center justify-between rounded-md border border-neutral-800 bg-neutral-900 p-4"><span>Chen Wei</span><span class="font-black text-red-500">4 - 5</span><span>Danish Hakim</span></div>
-                <div class="flex items-center justify-between rounded-md border border-neutral-800 bg-neutral-900 p-4"><span>Farid Osman</span><span class="font-black text-red-500">Tonight</span><span>Haziq Noor</span></div>
-                <div class="flex items-center justify-between rounded-md border border-neutral-800 bg-neutral-900 p-4"><span>Marcus Chen</span><span class="font-black text-red-500">Tonight</span><span>Raj Kumar</span></div>
-              </div>
-            </div>
-          </div>
+        <div class="overflow-hidden rounded-lg border border-neutral-800 bg-surface-container-low" id="ongoing-tournament-container">
+          <div class="p-8 md:p-10 text-center text-neutral-500">Loading ongoing tournament...</div>
         </div>
       </section>
 
       <section>
         <h2 class="mb-6 text-2xl font-black uppercase">Incoming Tournament</h2>
-        <div class="grid gap-6 md:grid-cols-3">
-          <article class="rounded-lg border border-neutral-800 bg-surface-container-low p-6">
-            <p class="mb-3 text-xs font-bold uppercase tracking-widest text-red-500">July 12, 2026</p>
-            <h3 class="mb-3 text-2xl font-black">Red Ball Open</h3>
-            <p class="mb-6 text-sm leading-6 text-neutral-400">Open singles tournament for all members. Race-to-3 until semi-final.</p>
-            <button class="btn-register rounded-md bg-red-600 px-5 py-3 text-xs font-bold uppercase tracking-widest hover:bg-red-500" data-tournament="Red Ball Open">Register</button>
-          </article>
-          <article class="rounded-lg border border-neutral-800 bg-surface-container-low p-6">
-            <p class="mb-3 text-xs font-bold uppercase tracking-widest text-red-500">August 3, 2026</p>
-            <h3 class="mb-3 text-2xl font-black">Doubles Challenge</h3>
-            <p class="mb-6 text-sm leading-6 text-neutral-400">Partner format with handicaps, alternate shots, and one-night finals.</p>
-            <button class="btn-register rounded-md bg-red-600 px-5 py-3 text-xs font-bold uppercase tracking-widest hover:bg-red-500" data-tournament="Doubles Challenge">Register</button>
-          </article>
-          <article class="rounded-lg border border-neutral-800 bg-surface-container-low p-6">
-            <p class="mb-3 text-xs font-bold uppercase tracking-widest text-red-500">September 19, 2026</p>
-            <h3 class="mb-3 text-2xl font-black">Black Cup Masters</h3>
-            <p class="mb-6 text-sm leading-6 text-neutral-400">Top-ranked invitational event with ranking points and club trophy.</p>
-            <button class="btn-register rounded-md bg-red-600 px-5 py-3 text-xs font-bold uppercase tracking-widest hover:bg-red-500" data-tournament="Black Cup Masters">Register</button>
-          </article>
+        <div id="incoming-tournaments" class="grid gap-6 md:grid-cols-3">
+          <!-- Dynamically populated via JS -->
+          <article class="col-span-3 text-center py-8 text-neutral-500">Loading tournaments...</article>
         </div>
       </section>
     </div>
@@ -142,23 +106,123 @@
     const error = document.getElementById('error-msg');
     let selectedTournament = '';
 
-    document.querySelectorAll('.btn-register').forEach((button) => {
-      button.addEventListener('click', () => {
-        if (!user) {
-          window.location.href = '/login';
-          return;
-        }
-        selectedTournament = button.dataset.tournament;
-        modalTitle.textContent = selectedTournament;
-        success.classList.add('hidden');
-        error.classList.add('hidden');
-        document.getElementById('register-form').reset();
-        document.getElementById('reg-name').value = user.displayName || '';
-        document.getElementById('reg-email').value = user.email || '';
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
+    function attachRegisterListeners() {
+      document.querySelectorAll('.btn-register').forEach((button) => {
+        button.addEventListener('click', () => {
+          if (!user) {
+            window.location.href = '/login';
+            return;
+          }
+          selectedTournament = button.dataset.tournament;
+          modalTitle.textContent = selectedTournament;
+          success.classList.add('hidden');
+          error.classList.add('hidden');
+          document.getElementById('register-form').reset();
+          document.getElementById('reg-name').value = user.displayName || '';
+          document.getElementById('reg-email').value = user.email || '';
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+        });
       });
-    });
+    }
+
+    async function loadIncomingTournaments() {
+      const container = document.getElementById('incoming-tournaments');
+      try {
+        const response = await fetch('/api/club_tournaments.php?action=list');
+        const data = await response.json();
+        
+        let html = '';
+        for (let i = 0; i < 3; i++) {
+          if (data[i]) {
+            html += `
+              <article class="rounded-lg border border-neutral-800 bg-surface-container-low p-6 flex flex-col">
+                <p class="mb-3 text-xs font-bold uppercase tracking-widest text-red-500">${data[i].date}</p>
+                <h3 class="mb-3 text-2xl font-black">${data[i].title}</h3>
+                <p class="mb-6 text-sm leading-6 text-neutral-400 flex-grow">${data[i].description}</p>
+                <button class="btn-register rounded-md bg-red-600 px-5 py-3 text-xs font-bold uppercase tracking-widest hover:bg-red-500 mt-auto" data-tournament="${data[i].title}">Register</button>
+              </article>
+            `;
+          } else {
+            html += `
+              <article class="rounded-lg border border-neutral-800 bg-surface-container-low p-6 flex flex-col justify-center items-center opacity-50 min-h-[240px]">
+                <div class="text-4xl mb-4 text-neutral-700"><i data-lucide="clock" class="w-12 h-12"></i></div>
+                <h3 class="text-xl font-black text-neutral-500 uppercase tracking-widest">Coming Soon</h3>
+              </article>
+            `;
+          }
+        }
+        container.innerHTML = html;
+        lucide.createIcons();
+        attachRegisterListeners();
+      } catch (err) {
+        console.error('Failed to load tournaments', err);
+        container.innerHTML = '<article class="col-span-3 text-center py-8 text-red-500">Failed to load tournaments.</article>';
+      }
+    }
+    
+    async function loadOngoingTournament() {
+      const container = document.getElementById('ongoing-tournament-container');
+      try {
+        const [infoRes, matchesRes] = await Promise.all([
+          fetch('/api/ongoing_tournament.php?action=get'),
+          fetch('/api/livescores.php?action=list')
+        ]);
+        const info = await infoRes.json();
+        const matches = await matchesRes.json();
+        
+        let matchesHtml = '';
+        if (Array.isArray(matches) && matches.length > 0) {
+          matchesHtml = matches.map(m => {
+            let scoreText = 'Upcoming';
+            let scoreClass = 'text-neutral-500';
+            if (m.status === 'live' || m.status === 'completed') {
+              scoreText = `${m.player1_frames} - ${m.player2_frames}`;
+              scoreClass = 'text-red-500';
+            } else if (m.status === 'upcoming') {
+              scoreText = 'Tonight';
+              scoreClass = 'text-red-500';
+            }
+            return `<div class="flex items-center justify-between rounded-md border border-neutral-800 bg-neutral-900 p-3 md:p-4 text-sm md:text-base"><span class="truncate max-w-[30%]">${m.player1_name}</span><span class="font-black whitespace-nowrap ${scoreClass}">${scoreText}</span><span class="truncate max-w-[30%] text-right">${m.player2_name}</span></div>`;
+          }).join('');
+        } else {
+          matchesHtml = '<div class="text-neutral-500 text-sm">No matches scheduled.</div>';
+        }
+
+        if (info) {
+          container.innerHTML = `
+            <div class="grid gap-0 lg:grid-cols-[.9fr_1.1fr]">
+              <div class="p-8 md:p-10 flex flex-col justify-between">
+                <div>
+                  <p class="mb-3 text-xs font-bold uppercase tracking-widest text-red-500">${info.badge_text}</p>
+                  <h3 class="mb-4 text-3xl font-black">${info.title}</h3>
+                  <p class="mb-8 leading-7 text-neutral-400">${info.description}</p>
+                </div>
+                <div class="grid grid-cols-3 gap-2 md:gap-4 border-t border-neutral-800 pt-6 text-center mt-auto">
+                  <div><div class="text-lg md:text-2xl font-black">${info.stat1_value}</div><div class="text-[10px] md:text-xs uppercase tracking-widest text-neutral-500">${info.stat1_label}</div></div>
+                  <div><div class="text-lg md:text-2xl font-black">${info.stat2_value}</div><div class="text-[10px] md:text-xs uppercase tracking-widest text-neutral-500">${info.stat2_label}</div></div>
+                  <div><div class="text-lg md:text-2xl font-black">${info.stat3_value}</div><div class="text-[10px] md:text-xs uppercase tracking-widest text-neutral-500">${info.stat3_label}</div></div>
+                </div>
+              </div>
+              <div class="bg-neutral-950 p-8 md:p-10">
+                <h4 class="mb-5 text-sm font-bold uppercase tracking-widest text-neutral-400">Tournament Table</h4>
+                <div class="space-y-3">
+                  ${matchesHtml}
+                </div>
+              </div>
+            </div>
+          `;
+        } else {
+          container.innerHTML = '<div class="p-8 md:p-10 text-center text-neutral-500">No ongoing tournament info available.</div>';
+        }
+      } catch (err) {
+        console.error('Failed to load ongoing tournament', err);
+        container.innerHTML = '<div class="p-8 md:p-10 text-center text-red-500">Failed to load ongoing tournament.</div>';
+      }
+    }
+
+    loadOngoingTournament();
+    loadIncomingTournaments();
 
     document.getElementById('close-modal').addEventListener('click', () => {
       modal.classList.add('hidden');

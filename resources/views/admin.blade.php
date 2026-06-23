@@ -63,7 +63,9 @@
       <div class="sidebar-link" data-tab="bookings"><i data-lucide="calendar-check" class="w-4 h-4"></i>Bookings</div>
       <div class="sidebar-link" data-tab="players"><i data-lucide="users" class="w-4 h-4"></i>Players</div>
       <div class="sidebar-link" data-tab="rankings"><i data-lucide="trophy" class="w-4 h-4"></i>Rankings</div>
-      <div class="sidebar-link" data-tab="tournaments"><i data-lucide="flag" class="w-4 h-4"></i>Tournaments</div>
+      <div class="sidebar-link" data-tab="ongoing-tourney"><i data-lucide="activity" class="w-4 h-4"></i>Ongoing Tourney</div>
+      <div class="sidebar-link" data-tab="club-tournaments"><i data-lucide="calendar" class="w-4 h-4"></i>Club Tournaments</div>
+      <div class="sidebar-link" data-tab="tournaments"><i data-lucide="flag" class="w-4 h-4"></i>Registrations</div>
       <div class="sidebar-link" data-tab="merchandise"><i data-lucide="shopping-bag" class="w-4 h-4"></i>Merchandise</div>
       <div class="sidebar-link" data-tab="orders"><i data-lucide="package" class="w-4 h-4"></i>Orders</div>
       <div class="sidebar-link" data-tab="livescores"><i data-lucide="radio" class="w-4 h-4"></i>Live Scores</div>
@@ -127,6 +129,50 @@
       <div class="bg-surface-container-high rounded-xl border border-outline-variant/20 overflow-x-auto">
         <table><thead><tr><th>Player</th><th>Tournament</th><th>Membership</th><th>Date</th><th>Status</th><th class="text-right">Actions</th></tr></thead>
         <tbody id="tournaments-body"><tr><td colspan="6" class="text-center text-neutral-500 py-8">Loading...</td></tr></tbody></table>
+      </div>
+    </section>
+
+    <!-- ONGOING TOURNEY -->
+    <section id="tab-ongoing-tourney" class="hidden">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-extrabold text-white">Ongoing Tournament</h2>
+      </div>
+      <div class="bg-surface-container-high rounded-xl border border-outline-variant/20 p-6 max-w-3xl">
+        <form id="ongoing-form" class="space-y-4">
+          <div><label class="text-xs text-neutral-400 uppercase tracking-widest block mb-1">Badge Text</label><input id="ot-badge" required placeholder="e.g. June Club Championship"/></div>
+          <div><label class="text-xs text-neutral-400 uppercase tracking-widest block mb-1">Main Title</label><input id="ot-title" required placeholder="e.g. Quarter Final Stage"/></div>
+          <div><label class="text-xs text-neutral-400 uppercase tracking-widest block mb-1">Description</label><textarea id="ot-desc" rows="3" required placeholder="Tournament description..."></textarea></div>
+          <div class="grid grid-cols-3 gap-4 pt-4 border-t border-neutral-800">
+            <div>
+              <label class="text-xs text-neutral-400 uppercase tracking-widest block mb-1">Stat 1 Value</label><input id="ot-s1v" required placeholder="e.g. 16"/>
+              <label class="text-xs text-neutral-400 uppercase tracking-widest block mt-2 mb-1">Stat 1 Label</label><input id="ot-s1l" required placeholder="e.g. Players"/>
+            </div>
+            <div>
+              <label class="text-xs text-neutral-400 uppercase tracking-widest block mb-1">Stat 2 Value</label><input id="ot-s2v" required placeholder="e.g. 5"/>
+              <label class="text-xs text-neutral-400 uppercase tracking-widest block mt-2 mb-1">Stat 2 Label</label><input id="ot-s2l" required placeholder="e.g. Frames"/>
+            </div>
+            <div>
+              <label class="text-xs text-neutral-400 uppercase tracking-widest block mb-1">Stat 3 Value</label><input id="ot-s3v" required placeholder="e.g. RM800"/>
+              <label class="text-xs text-neutral-400 uppercase tracking-widest block mt-2 mb-1">Stat 3 Label</label><input id="ot-s3l" required placeholder="e.g. Prize"/>
+            </div>
+          </div>
+          <div class="pt-4 border-t border-neutral-800 flex justify-end items-center gap-4">
+            <div id="ot-success" class="text-green-400 text-sm hidden font-bold">Saved successfully!</div>
+            <button type="submit" class="btn btn-red px-6">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- CLUB TOURNAMENTS -->
+    <section id="tab-club-tournaments" class="hidden">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-extrabold text-white">Club Tournaments</h2>
+        <button class="btn btn-red" onclick="openClubTournamentModal()">+ Add Tournament</button>
+      </div>
+      <div class="bg-surface-container-high rounded-xl border border-outline-variant/20 overflow-x-auto">
+        <table><thead><tr><th>Date</th><th>Title</th><th>Description</th><th class="text-right">Actions</th></tr></thead>
+        <tbody id="club-tournaments-body"><tr><td colspan="4" class="text-center text-neutral-500 py-8">Loading...</td></tr></tbody></table>
       </div>
     </section>
 
@@ -194,6 +240,23 @@
   </div>
 </div>
 
+<!-- CLUB TOURNAMENT MODAL -->
+<div id="ct-modal" class="modal-bg hidden">
+  <div class="modal-box">
+    <h3 id="ct-modal-title" class="text-xl font-bold text-white mb-6">Add Tournament</h3>
+    <form id="ct-form" class="space-y-4">
+      <input type="hidden" id="ct-id"/>
+      <div><label class="text-xs text-neutral-400 uppercase tracking-widest block mb-1">Date</label><input id="ct-date" required placeholder="e.g. July 12, 2026"/></div>
+      <div><label class="text-xs text-neutral-400 uppercase tracking-widest block mb-1">Title</label><input id="ct-title" required placeholder="Tournament title"/></div>
+      <div><label class="text-xs text-neutral-400 uppercase tracking-widest block mb-1">Description</label><textarea id="ct-desc" rows="3" required placeholder="Description..."></textarea></div>
+      <div class="flex gap-3 pt-2">
+        <button type="button" class="btn btn-gray flex-1" onclick="closeModal('ct-modal')">Cancel</button>
+        <button type="submit" class="btn btn-red flex-1">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <!-- MERCH MODAL -->
 <div id="merch-modal" class="modal-bg hidden">
   <div class="modal-box">
@@ -250,7 +313,7 @@
 </div>
 
 <script type="module">
-import { initNav } from "/js/nav.js";
+import { initNav } from "/js/nav.js?v=3";
 
 const user = await initNav('admin');
 if (!user || user.role !== 'admin') { window.location.href = '/login'; }
@@ -274,6 +337,8 @@ document.querySelectorAll('.sidebar-link[data-tab]').forEach(btn => {
     else if (tab === 'players') loadPlayers();
     else if (tab === 'rankings') loadRankings();
     else if (tab === 'tournaments') loadTournaments();
+    else if (tab === 'ongoing-tourney') loadOngoingTourney();
+    else if (tab === 'club-tournaments') loadClubTournaments();
     else if (tab === 'merchandise') loadMerch();
     else if (tab === 'orders') loadOrders();
     else if (tab === 'livescores') loadLiveScores();
@@ -427,6 +492,83 @@ window.deleteTournament = async (id) => {
   await api('api/tournaments.php?action=delete', {method:'POST',body:JSON.stringify({id})});
   loadTournaments();
 };
+
+// ONGOING TOURNEY
+async function loadOngoingTourney() {
+  const data = await api('api/ongoing_tournament.php?action=get');
+  if (data) {
+    document.getElementById('ot-badge').value = data.badge_text || '';
+    document.getElementById('ot-title').value = data.title || '';
+    document.getElementById('ot-desc').value = data.description || '';
+    document.getElementById('ot-s1v').value = data.stat1_value || '';
+    document.getElementById('ot-s1l').value = data.stat1_label || '';
+    document.getElementById('ot-s2v').value = data.stat2_value || '';
+    document.getElementById('ot-s2l').value = data.stat2_label || '';
+    document.getElementById('ot-s3v').value = data.stat3_value || '';
+    document.getElementById('ot-s3l').value = data.stat3_label || '';
+  }
+}
+document.getElementById('ongoing-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const payload = {
+    badge_text: document.getElementById('ot-badge').value,
+    title: document.getElementById('ot-title').value,
+    description: document.getElementById('ot-desc').value,
+    stat1_value: document.getElementById('ot-s1v').value,
+    stat1_label: document.getElementById('ot-s1l').value,
+    stat2_value: document.getElementById('ot-s2v').value,
+    stat2_label: document.getElementById('ot-s2l').value,
+    stat3_value: document.getElementById('ot-s3v').value,
+    stat3_label: document.getElementById('ot-s3l').value
+  };
+  await api('api/ongoing_tournament.php?action=update', { method: 'POST', body: JSON.stringify(payload) });
+  const successMsg = document.getElementById('ot-success');
+  successMsg.classList.remove('hidden');
+  setTimeout(() => successMsg.classList.add('hidden'), 3000);
+});
+
+// CLUB TOURNAMENTS
+async function loadClubTournaments() {
+  const data = await api('api/club_tournaments.php?action=list');
+  if (!Array.isArray(data)) return;
+  document.getElementById('club-tournaments-body').innerHTML = data.length === 0
+    ? '<tr><td colspan="4" class="text-center text-neutral-500 py-8">No tournaments found.</td></tr>'
+    : data.map(t => `<tr>
+      <td class="whitespace-nowrap">${t.date}</td><td class="font-bold">${t.title}</td><td class="text-sm text-neutral-400 truncate max-w-xs">${t.description}</td>
+      <td class="text-right">
+        <button class="btn btn-gray btn-sm mr-1" onclick='editClubTournament(${JSON.stringify(t).replace(/'/g, "&#39;")})'>Edit</button>
+        <button class="btn btn-sm" style="background:#3f0621;color:#f87171" onclick="deleteClubTournament(${t.id})">Delete</button>
+      </td></tr>`).join('');
+}
+window.openClubTournamentModal = () => {
+  document.getElementById('ct-modal-title').innerText = 'Add Tournament';
+  document.getElementById('ct-id').value=''; document.getElementById('ct-date').value='';
+  document.getElementById('ct-title').value=''; document.getElementById('ct-desc').value='';
+  document.getElementById('ct-modal').classList.remove('hidden');
+};
+window.editClubTournament = (t) => {
+  document.getElementById('ct-modal-title').innerText = 'Edit Tournament';
+  document.getElementById('ct-id').value=t.id; document.getElementById('ct-date').value=t.date;
+  document.getElementById('ct-title').value=t.title; document.getElementById('ct-desc').value=t.description;
+  document.getElementById('ct-modal').classList.remove('hidden');
+};
+window.deleteClubTournament = async (id) => {
+  if (!confirm('Delete this tournament?')) return;
+  await api('api/club_tournaments.php?action=delete', {method:'POST',body:JSON.stringify({id})});
+  loadClubTournaments();
+};
+document.getElementById('ct-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const id = document.getElementById('ct-id').value;
+  const payload = {
+    date:document.getElementById('ct-date').value,
+    title:document.getElementById('ct-title').value,
+    description:document.getElementById('ct-desc').value
+  };
+  if (id) payload.id = id;
+  await api(`api/club_tournaments.php?action=${id?'update':'create'}`, {method:'POST',body:JSON.stringify(payload)});
+  closeModal('ct-modal'); loadClubTournaments();
+});
 
 // MERCHANDISE
 async function loadMerch() {

@@ -36,6 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'create') {
         sendJson(['error' => 'Missing fields'], 400);
     }
 
+    date_default_timezone_set('Asia/Kuala_Lumpur');
+    $currentDateTime = new DateTime();
+    $bookingDateTime = new DateTime("$date $time");
+    if ($bookingDateTime < $currentDateTime) {
+        sendJson(['error' => 'Cannot book past dates or times'], 400);
+    }
+
     $stmt = $pdo->prepare("SELECT id FROM bookings WHERE date = ? AND tableid = ? AND time = ? AND status != 'cancelled'");
     $stmt->execute([$date, $tableId, $time]);
     if ($stmt->fetch()) {
