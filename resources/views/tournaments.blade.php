@@ -25,7 +25,7 @@
         #050505;
     }
     body > * { position:relative; z-index:1; }
-    .hidden { display:none!important; }
+    
   </style>
 </head>
 <body class="flex min-h-screen flex-col bg-background text-white">

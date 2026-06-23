@@ -46,7 +46,7 @@
     }
     body > * { position:relative; z-index:1; }
     .baize-gradient { background: linear-gradient(135deg, #166534 0%, #14532d 100%); }
-    .hidden { display: none !important; }
+    
   </style>
 </head>
 <body class="flex flex-col min-h-screen bg-background text-white">

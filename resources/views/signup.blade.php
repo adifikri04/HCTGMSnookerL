@@ -23,7 +23,7 @@
   <style>
     body { background-color: #0a0a0a; color: white; }
     .baize-gradient { background: linear-gradient(135deg, #166534 0%, #14532d 100%); }
-    .hidden { display: none !important; }
+    
   </style>
 </head>
 <body class="flex flex-col min-h-screen">

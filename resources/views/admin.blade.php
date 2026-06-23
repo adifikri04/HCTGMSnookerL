@@ -10,7 +10,7 @@
   <style>
     body{background:#0a0a0a;color:white;}
     .baize{background:linear-gradient(135deg,#166534,#14532d);}
-    .hidden{display:none!important;}
+    
     .tab-btn.active{background:#dc2626;color:white;}
     input,select,textarea{background:#171717;border:1px solid #404040;color:white;padding:8px 12px;border-radius:8px;width:100%;outline:none;}
     input:focus,select:focus,textarea:focus{border-color:#dc2626;}
