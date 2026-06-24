@@ -265,7 +265,12 @@
       <input type="hidden" id="m-id"/>
       <div><label class="text-xs text-neutral-400 uppercase tracking-widest block mb-1">Name</label><input id="m-name" required placeholder="Item name"/></div>
       <div><label class="text-xs text-neutral-400 uppercase tracking-widest block mb-1">Description</label><textarea id="m-desc" rows="2" placeholder="Description"></textarea></div>
-      <div><label class="text-xs text-neutral-400 uppercase tracking-widest block mb-1">Image URL</label><input id="m-image" placeholder="https://example.com/item.jpg"/></div>
+      <div><label class="text-xs text-neutral-400 uppercase tracking-widest block mb-1">Image</label>
+        <div class="flex gap-2">
+          <input type="file" id="m-image-file" accept="image/*" class="flex-1 text-sm p-2 border border-neutral-700 rounded bg-transparent"/>
+          <input id="m-image" placeholder="Or Image URL" class="flex-1"/>
+        </div>
+      </div>
       <div class="grid grid-cols-2 gap-3">
         <div><label class="text-xs text-neutral-400 uppercase tracking-widest block mb-1">Price (RM)</label><input id="m-price" type="number" min="0" step="0.01" value="0"/></div>
         <div><label class="text-xs text-neutral-400 uppercase tracking-widest block mb-1">Stock</label><input id="m-stock" type="number" min="0" value="0"/></div>
@@ -588,13 +593,13 @@ async function loadMerch() {
 window.openMerchModal = () => {
   document.getElementById('merch-modal-title').innerText = 'Add Item';
   document.getElementById('m-id').value=''; document.getElementById('m-name').value='';
-  document.getElementById('m-desc').value=''; document.getElementById('m-image').value=''; document.getElementById('m-price').value=0; document.getElementById('m-stock').value=0;
+  document.getElementById('m-desc').value=''; document.getElementById('m-image').value=''; document.getElementById('m-image-file').value=''; document.getElementById('m-price').value=0; document.getElementById('m-stock').value=0;
   document.getElementById('merch-modal').classList.remove('hidden');
 };
 window.editMerch = (m) => {
   document.getElementById('merch-modal-title').innerText = 'Edit Item';
   document.getElementById('m-id').value=m.id; document.getElementById('m-name').value=m.name;
-  document.getElementById('m-desc').value=m.description||''; document.getElementById('m-image').value=m.image_url||''; document.getElementById('m-price').value=m.price; document.getElementById('m-stock').value=m.stock;
+  document.getElementById('m-desc').value=m.description||''; document.getElementById('m-image').value=m.image_url||''; document.getElementById('m-image-file').value=''; document.getElementById('m-price').value=m.price; document.getElementById('m-stock').value=m.stock;
   document.getElementById('merch-modal').classList.remove('hidden');
 };
 window.deleteMerch = async (id) => {
@@ -605,10 +610,17 @@ window.deleteMerch = async (id) => {
 document.getElementById('merch-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const id = document.getElementById('m-id').value;
-  const payload = {name:document.getElementById('m-name').value,description:document.getElementById('m-desc').value,
-    image_url:document.getElementById('m-image').value,price:document.getElementById('m-price').value,stock:document.getElementById('m-stock').value};
-  if (id) payload.id = id;
-  await api(`api/merchandise.php?action=${id?'update':'create'}`, {method:'POST',body:JSON.stringify(payload)});
+  const fileInput = document.getElementById('m-image-file');
+  let formData = new FormData();
+  formData.append('name', document.getElementById('m-name').value);
+  formData.append('description', document.getElementById('m-desc').value);
+  formData.append('price', document.getElementById('m-price').value);
+  formData.append('stock', document.getElementById('m-stock').value);
+  formData.append('image_url', document.getElementById('m-image').value);
+  if (id) formData.append('id', id);
+  if (fileInput && fileInput.files[0]) formData.append('image', fileInput.files[0]);
+
+  await api(`api/merchandise.php?action=${id?'update':'create'}`, {method:'POST',body:formData});
   closeModal('merch-modal'); loadMerch();
 });
 

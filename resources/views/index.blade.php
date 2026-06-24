@@ -103,7 +103,7 @@
   </nav>
 
   <main class="flex-grow pt-20">
-    <section class="flow-section min-h-[calc(100vh-5rem)] px-6 pt-16 md:px-12" style="--photo: url('https://images.unsplash.com/photo-1615226449406-669ea2525baf?auto=format&fit=crop&w=1800&q=80');">
+    <section class="flow-section min-h-[calc(100vh-5rem)] px-6 pt-16 md:px-12" style="--photo: url('/img/bg-login.jpg');">
       <div class="mx-auto flex w-full max-w-7xl justify-start">
         <div class="flow-copy">
           <p class="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-red-500">Snooker Club</p>
@@ -115,7 +115,7 @@
       </div>
     </section>
 
-    <section class="flow-section right px-6 md:px-12" style="--photo: url('https://images.unsplash.com/photo-1532635241-17e820acc59f?auto=format&fit=crop&w=1800&q=80');">
+    <section class="flow-section right px-6 md:px-12" style="--photo: url('/img/toursnook.png');">
       <div class="mx-auto flex w-full max-w-7xl justify-end">
         <div class="flow-copy">
           <p class="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-red-500">Competition</p>
@@ -130,7 +130,7 @@
       </div>
     </section>
 
-    <section class="flow-section px-6 md:px-12" style="--photo: url('https://images.unsplash.com/photo-1521417531039-75e91486cc40?auto=format&fit=crop&w=1800&q=80');">
+    <section class="flow-section px-6 md:px-12" style="--photo: url('/img/playerprof.jpg');">
       <div class="mx-auto flex w-full max-w-7xl justify-start">
         <div class="flow-copy">
           <p class="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-red-500">Club Players</p>
@@ -145,7 +145,7 @@
       </div>
     </section>
 
-    <section class="flow-section right px-6 md:px-12" style="--photo: url('https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1800&q=80');">
+    <section class="flow-section right px-6 md:px-12" style="--photo: url('/img/playerrank.jpeg');">
       <div class="mx-auto flex w-full max-w-7xl justify-end">
         <div class="flow-copy">
           <p class="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-red-500">Leaderboard</p>
@@ -160,7 +160,7 @@
       </div>
     </section>
 
-    <section class="flow-section px-6 md:px-12" style="--photo: url('https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1800&q=80');">
+    <section class="flow-section px-6 md:px-12" style="--photo: url('/img/snookmerch.png');">
       <div class="mx-auto flex w-full max-w-7xl justify-start">
         <div class="flow-copy">
           <p class="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-red-500">Club Shop</p>
