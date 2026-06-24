@@ -620,8 +620,12 @@ document.getElementById('merch-form').addEventListener('submit', async (e) => {
   if (id) formData.append('id', id);
   if (fileInput && fileInput.files[0]) formData.append('image', fileInput.files[0]);
 
-  await api(`api/merchandise.php?action=${id?'update':'create'}`, {method:'POST',body:formData});
-  closeModal('merch-modal'); loadMerch();
+  const res = await api(`api/merchandise.php?action=${id?'update':'create'}`, {method:'POST',body:formData});
+  if (res && res.error) {
+      alert('Error: ' + res.error);
+  } else {
+      closeModal('merch-modal'); loadMerch();
+  }
 });
 
 // Load dashboard on start
